@@ -1,0 +1,13 @@
+name: ml_lab1
+channels:
+  - defaults
+dependencies:
+  - python=3.10
+  - feedparser
+  - pyarrow
+  - matplotlib
+  - pymongo
+  - pandas
+  - requests
+  - nltk
+  - scikit-learn
