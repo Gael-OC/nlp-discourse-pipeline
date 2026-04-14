@@ -24,5 +24,6 @@ MONGO_DB_NAME = "LaboratorioML"
 MONGO_COLLECTION_NAME = "corpus_textos"
 
 # Salidas de archivos binarios
-PARQUET_OUTPUT_NAME = "data/processed/corpus_consolidado_laboratorio_01.parquet"
+RAW_PARQUET_OUTPUT = "data/raw/corpus_crudo.parquet"
+PROCESSED_PARQUET_OUTPUT = "data/processed/corpus_limpio.parquet"
 PICKLE_OUTPUT_NAME = "data/processed/corpus_consolidado_laboratorio_01.pkl"
