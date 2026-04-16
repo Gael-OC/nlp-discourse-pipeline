@@ -3,6 +3,7 @@ import os
 import config
 import fuentes
 import preprocessing
+import features
 
 def main():
 # Comprobar existencia de archivo local
@@ -38,6 +39,15 @@ def main():
     # Persistencia Local (Procesada)
     df_limpio.to_parquet(config.PROCESSED_PARQUET_OUTPUT, index=False, compression="snappy")
     print(f"Corpus limpio guardado en: {config.PROCESSED_PARQUET_OUTPUT}")
+
+# 5. Capa de Análisis Vectorial y Clustering
+    print("Aplicando TF-IDF, K-Means y PCA...")
+    df_final, vectorizador, modelo_kmeans = features.extraer_caracteristicas_y_clusters(df_limpio)
+
+    # Persistencia Local (Archivo final con coordenadas y clusters)
+    df_final.to_parquet(config.FINAL_PARQUET_OUTPUT, index=False, compression="snappy")
+    print(f"Análisis completado. Datos finales guardados en: {config.FINAL_PARQUET_OUTPUT}")
+    print(f"Columnas nuevas generadas: {['cluster', 'pca_1', 'pca_2']}")
 
 if __name__ == "__main__":
     main()
