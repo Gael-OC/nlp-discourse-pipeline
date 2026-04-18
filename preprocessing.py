@@ -15,6 +15,7 @@ def limpiar_texto(texto):
         return ""
         
     texto = texto.lower()
+    texto = re.sub(r"<[^>]+>", " ", texto)
     texto = re.sub(r"http\S+|www\.\S+", " ", texto)
     texto = re.sub(r"@\w+", " ", texto)
     texto = re.sub(r"[^a-záéíóúñü\s]", " ", texto)

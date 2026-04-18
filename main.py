@@ -4,6 +4,7 @@ import config
 import fuentes
 import preprocessing
 import features
+import visualization
 
 def main():
 # Comprobar existencia de archivo local
@@ -40,14 +41,20 @@ def main():
     df_limpio.to_parquet(config.PROCESSED_PARQUET_OUTPUT, index=False, compression="snappy")
     print(f"Corpus limpio guardado en: {config.PROCESSED_PARQUET_OUTPUT}")
 
-# 5. Capa de Análisis Vectorial y Clustering
+    # 5. Capa de Análisis Vectorial y Clustering
     print("Aplicando TF-IDF, K-Means y PCA...")
     df_final, vectorizador, modelo_kmeans = features.extraer_caracteristicas_y_clusters(df_limpio)
 
-    # Persistencia Local (Archivo final con coordenadas y clusters)
+    # Persistencia Local
     df_final.to_parquet(config.FINAL_PARQUET_OUTPUT, index=False, compression="snappy")
     print(f"Análisis completado. Datos finales guardados en: {config.FINAL_PARQUET_OUTPUT}")
     print(f"Columnas nuevas generadas: {['cluster', 'pca_1', 'pca_2']}")
+
+    # 6. Capa de Visualizacion
+    print("Generando gráficos exploratorios...")
+    visualization.graficar_top_20_frecuencias(df_final)
+    visualization.graficar_pca_por_fuente(df_final)
+    visualization.graficar_pca_por_cluster(df_final)
 
 if __name__ == "__main__":
     main()
