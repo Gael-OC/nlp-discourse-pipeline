@@ -3,19 +3,34 @@ from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
 import umap.umap_ as umap
-
+from sklearn.feature_selection import VarianceThreshold
+from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.preprocessing import MinMaxScaler
+    
 def activar_estrategias(df):
     #estrategia PCA
     vectorizer = TfidfVectorizer(max_features=1000)
     X_tfidf = vectorizer.fit_transform(df['texto_limpio'])
     n_docs, n_terms = X_tfidf.shape
-    print(f"Número de Documentos totales: {n_docs}")
-    print(f"Número de terminos encontrados: {n_terms}")
     X_dense = X_tfidf.toarray() #TF-IDF 
     pca = PCA(n_components=4, random_state=42)
     X_pca = pca.fit_transform(X_dense)
     df['pca_1'] = X_pca[:, 0]
     df['pca_2'] = X_pca[:, 1]
+    
+    #XSeleccion 1
+    selector = VarianceThreshold(threshold=0.001)
+    X_sel = selector.fit_transform(X_dense)
+    print('Antes:', X_dense.shape)
+    print('Despues:', X_sel.shape)
+    
+    #Xseleccion 2
+    y = df['cluster']
+    X_nonneg = MinMaxScaler().fit_transform(X_dense)
+    selector = SelectKBest(score_func=chi2, k=20)
+    X_best = selector.fit_transform(X_nonneg, y)
+    
+    
     
     #estrategia T-SNE
     X_emb = TSNE(
@@ -26,8 +41,6 @@ def activar_estrategias(df):
     random_state=42
     ).fit_transform(X_dense)
     
-    #plt.scatter(X_emb[:, 0], X_emb[:, 1], c=df['cluster'])
-    #plt.title('t-SNE del corpus')
     
     #estrategia UMAP
     reductor = umap.UMAP(
@@ -38,6 +51,8 @@ def activar_estrategias(df):
     )
     X_umap = reductor.fit_transform(X_dense)
     visualizar_comparativa_estrategias(df, X_dense)
+    visualizar_comparativa_estrategias(df, X_sel)
+    visualizar_comparativa_estrategias(df, X_best)
     
 
 def visualizar_comparativa_estrategias(df, X_dense):
