@@ -6,6 +6,7 @@ import preprocessing
 import features
 import visualization
 import database
+import visualization_1_2
 
 def main():
 # Comprobar existencia de archivo local
@@ -65,6 +66,10 @@ def main():
         db_name=config.MONGO_DB_NAME,
         collection_name=config.MONGO_COLLECTION_NAME
     )
+    print("Generando visualizacion de dimensionalidad ...")
+    visualization_1_2.activar_estrategias(df_final)
+
+    
 
 if __name__ == "__main__":
     main()

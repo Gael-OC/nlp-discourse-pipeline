@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from collections import Counter
 
+
 def graficar_top_20_frecuencias(df):
     if len(df) == 0 or "texto_limpio" not in df.columns:
         return
@@ -54,3 +55,5 @@ def graficar_pca_por_cluster(df):
     plt.legend()
     plt.tight_layout()
     plt.show()
+    
+    
