@@ -5,6 +5,7 @@ import fuentes
 import preprocessing
 import features
 import visualization
+import database
 
 def main():
 # Comprobar existencia de archivo local
@@ -55,6 +56,15 @@ def main():
     visualization.graficar_top_20_frecuencias(df_final)
     visualization.graficar_pca_por_fuente(df_final)
     visualization.graficar_pca_por_cluster(df_final)
+
+    # 7. Persistencia Externa (MongoDB)
+    print("Subiendo datos a MongoDB...")
+    database.guardar_en_mongodb(
+        df=df_final,
+        mongo_uri=config.MONGODB_URI,
+        db_name=config.MONGO_DB_NAME,
+        collection_name=config.MONGO_COLLECTION_NAME
+    )
 
 if __name__ == "__main__":
     main()

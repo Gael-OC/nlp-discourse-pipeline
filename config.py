@@ -26,5 +26,4 @@ MONGO_COLLECTION_NAME = "corpus_textos"
 # Salidas de archivos binarios
 RAW_PARQUET_OUTPUT = "data/raw/corpus_crudo.parquet"
 PROCESSED_PARQUET_OUTPUT = "data/processed/corpus_limpio.parquet"
-PICKLE_OUTPUT_NAME = "data/processed/corpus_consolidado_laboratorio_01.pkl"
 FINAL_PARQUET_OUTPUT = "data/processed/corpus_final_clusterizado.parquet"
