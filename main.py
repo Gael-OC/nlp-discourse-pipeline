@@ -45,6 +45,9 @@ def main():
     # 5. Capa de Análisis Vectorial y Clustering
     print("Aplicando TF-IDF, K-Means y PCA...")
     df_final, vectorizador, modelo_kmeans = features.extraer_caracteristicas_y_clusters(df_limpio)
+    
+    print("\nTérminos más representativos por cluster:")
+    features.imprimir_top_terminos_cluster(modelo_kmeans, vectorizador)
 
     # Persistencia Local
     df_final.to_parquet(config.FINAL_PARQUET_OUTPUT, index=False, compression="snappy")

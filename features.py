@@ -36,3 +36,10 @@ def extraer_caracteristicas_y_clusters(df):
         df_out["pca_2"] = 0.0
 
     return df_out, vectorizer, modelo_kmeans
+
+def imprimir_top_terminos_cluster(modelo_kmeans, vectorizer, top_n=10):
+    terminos = vectorizer.get_feature_names_out()
+    for i, centroide in enumerate(modelo_kmeans.cluster_centers_):
+        indices = centroide.argsort()[::-1][:top_n]
+        top_terminos = [terminos[idx] for idx in indices]
+        print(f"Cluster {i}: {top_terminos}")
