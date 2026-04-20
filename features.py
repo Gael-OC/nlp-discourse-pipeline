@@ -39,13 +39,13 @@ def extraer_caracteristicas_y_clusters(df):
         df_out["pca_2"] = X_pca[:, 1]
 
         # t-SNE
-        tsne = TSNE(n_components=2, perplexity=33, random_state=42, init='pca')
+        tsne = TSNE(n_components=2, perplexity=10, random_state=42, init='pca')
         X_tsne = tsne.fit_transform(X_dense)
         df_out["tsne_1"] = X_tsne[:, 0]
         df_out["tsne_2"] = X_tsne[:, 1]
 
         # UMAP
-        reductor = umap.UMAP(n_neighbors=10, min_dist=0.15, n_components=2, random_state=42)
+        reductor = umap.UMAP(n_neighbors=10, min_dist=0.1, n_components=2, random_state=42)
         X_umap = reductor.fit_transform(X_dense)
         df_out["umap_1"] = X_umap[:, 0]
         df_out["umap_2"] = X_umap[:, 1]
