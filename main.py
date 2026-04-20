@@ -67,8 +67,15 @@ def main():
         db_name=config.MONGO_DB_NAME,
         collection_name=config.MONGO_COLLECTION_NAME
     )
-    print("Generando visualizacion de dimensionalidad ...")
-    visualization_1_2.activar_estrategias(df_final)
+    
+    #lab 1.2 Empezando por procesar datos
+    df_procesado, vectorizador, modelo_km = features.extraer_caracteristicas_y_clusters(df_final)
+    print(f"Tamaño del vocabulario TF-IDF: {len(vectorizador.get_feature_names_out())}")
+    features.imprimir_top_terminos_cluster(modelo_km, vectorizador)
+    #visualizacion de graficos con el df ya procesado con la seleccion de caracteristicas
+    visualization_1_2.visualizar_comparativa_estrategias(df_procesado)
+    visualization_1_2.graficar_nubes_de_palabras(df_procesado)
+    
 
     
 
