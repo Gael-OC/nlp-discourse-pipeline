@@ -14,7 +14,7 @@ def obtener_frecuencias(textos):
 def extraer_caracteristicas_y_clusters(df):
     df_out = df.copy()
     if len(df_out) == 0:
-        return df_out, None, None
+        return df_out, None, None, None
 
     # Vectorizacion TF-IDF
     vectorizer = TfidfVectorizer(max_features=1000)
@@ -30,7 +30,7 @@ def extraer_caracteristicas_y_clusters(df):
     df_out["cluster"] = modelo_kmeans.fit_predict(X_sel)
 
     if len(df_out) >= 2:
-        X_dense = X_tfidf.toarray()
+        X_dense = X_sel.toarray()
         
         # PCA
         pca = PCA(n_components=2, random_state=42)
@@ -53,10 +53,10 @@ def extraer_caracteristicas_y_clusters(df):
         for col in ["pca_1", "pca_2", "tsne_1", "tsne_2", "umap_1", "umap_2"]:
             df_out[col] = 0.0
 
-    return df_out, vectorizer, modelo_kmeans
+    return df_out, vectorizer, modelo_kmeans, selector
 
-def imprimir_top_terminos_cluster(modelo_kmeans, vectorizer, top_n=10):
-    terminos = vectorizer.get_feature_names_out()
+def imprimir_top_terminos_cluster(modelo_kmeans, vectorizer, selector, top_n=10):
+    terminos = vectorizer.get_feature_names_out()[selector.get_support()]
     for i, centroide in enumerate(modelo_kmeans.cluster_centers_):
         indices = centroide.argsort()[::-1][:top_n]
         top_terminos = [terminos[idx] for idx in indices]

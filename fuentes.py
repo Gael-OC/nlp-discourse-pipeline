@@ -19,7 +19,7 @@ def leer_rss(url_rss, nombre_fuente, max_items=20):
             "texto": texto,
             "fecha": entry.get("published", entry.get("updated", None)),
             "url": entry.get("link", ""),
-            "autor": None,
+            "autor": entry.get("author", None),
             "consulta": None
         })
 

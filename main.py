@@ -9,6 +9,7 @@ import database
 import visualization_1_2
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn.preprocessing import MinMaxScaler
+
 def main():
 # Comprobar existencia de archivo local
     if os.path.exists(config.RAW_PARQUET_OUTPUT):
@@ -45,22 +46,24 @@ def main():
     print(f"Corpus limpio guardado en: {config.PROCESSED_PARQUET_OUTPUT}")
 
     # 5. Capa de Análisis Vectorial y Clustering
-    print("Aplicando TF-IDF, K-Means y PCA...")
-    df_final, vectorizador, modelo_kmeans = features.extraer_caracteristicas_y_clusters(df_limpio)
+    print("Aplicando pipeline completo...")
+    df_final, vectorizador, modelo_kmeans, selector = features.extraer_caracteristicas_y_clusters(df_limpio)
     
+    print(f"Tamaño del vocabulario original: {len(vectorizador.get_feature_names_out())}")
+    print(f"Características seleccionadas: {sum(selector.get_support())}")
     print("\nTérminos más representativos por cluster:")
-    features.imprimir_top_terminos_cluster(modelo_kmeans, vectorizador)
+    features.imprimir_top_terminos_cluster(modelo_kmeans, vectorizador, selector)
 
     # Persistencia Local
     df_final.to_parquet(config.FINAL_PARQUET_OUTPUT, index=False, compression="snappy")
-    print(f"Análisis completado. Datos finales guardados en: {config.FINAL_PARQUET_OUTPUT}")
-    print(f"Columnas nuevas generadas: {['cluster', 'pca_1', 'pca_2']}")
+    print(f"Análisis completado. Datos guardados en: {config.FINAL_PARQUET_OUTPUT}")
 
-    # 6. Capa de Visualizacion
-    print("Generando gráficos exploratorios...")
+    # 6. Visualizaciones
+    print("Generando visualizaciones...")
     visualization.graficar_top_20_frecuencias(df_final)
     visualization.graficar_pca_por_fuente(df_final)
-    visualization.graficar_pca_por_cluster(df_final)
+    visualization_1_2.visualizar_comparativa_estrategias(df_final)
+    visualization_1_2.graficar_nubes_de_palabras(df_final)
 
     # 7. Persistencia Externa (MongoDB)
     print("Subiendo datos a MongoDB...")
@@ -70,17 +73,6 @@ def main():
         db_name=config.MONGO_DB_NAME,
         collection_name=config.MONGO_COLLECTION_NAME
     )
-    
-    #lab 1.2 Empezando por procesar datos
-    df_procesado, vectorizador, modelo_km = features.extraer_caracteristicas_y_clusters(df_final)
-    print(f"Tamaño del vocabulario TF-IDF: {len(vectorizador.get_feature_names_out())}")
-    features.imprimir_top_terminos_cluster(modelo_km, vectorizador)
-    #visualizacion de graficos con el df ya procesado con la seleccion de caracteristicas
-    visualization_1_2.visualizar_comparativa_estrategias(df_procesado)
-    visualization_1_2.graficar_nubes_de_palabras(df_procesado)
-    
-
-    
 
 if __name__ == "__main__":
     main()
