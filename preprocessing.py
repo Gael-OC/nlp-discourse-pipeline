@@ -18,8 +18,9 @@ def limpiar_texto(texto):
     texto = re.sub(r"<[^>]+>", " ", texto)
     texto = re.sub(r"http\S+|www\.\S+", " ", texto)
     texto = re.sub(r"@\w+", " ", texto)
-    texto = re.sub(r"[^a-záéíóúñü\s]", " ", texto)
     texto = re.sub(r"#\w+", " ", texto)
+    texto = re.sub(r"[^a-záéíóúñü\s]", " ", texto)
+    
     
     tokens = texto.split()
     tokens = [tok for tok in tokens if tok not in STOPWORDS_ES and len(tok) > 2]
