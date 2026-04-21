@@ -7,8 +7,6 @@ import features
 import visualization
 import database
 import visualization_1_2
-from sklearn.feature_selection import SelectKBest, chi2
-from sklearn.preprocessing import MinMaxScaler
 
 def main():
 # Comprobar existencia de archivo local
