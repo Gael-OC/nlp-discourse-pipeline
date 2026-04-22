@@ -45,6 +45,7 @@ def buscar_posts_x(query, bearer_token, max_results=10):
 
     # Manejo de error HTTP
     if response.status_code != 200:
+        print(f"[API X] Error {response.status_code}: {response.text}")
         return pd.DataFrame(columns=["id", "fuente", "texto", "fecha", "url", "autor", "consulta"])
 
     data = response.json()
@@ -68,6 +69,7 @@ def buscar_posts_x(query, bearer_token, max_results=10):
             "url": f"https://x.com/{username}/status/{post_id}" if username and post_id else None,
             "autor": username if username else author_id,
             "consulta": query
-        })
-
+        })    
+        
+    print(f"[API X] Conexión exitosa. Se descargaron {len(registros)} posts.")
     return pd.DataFrame(registros)

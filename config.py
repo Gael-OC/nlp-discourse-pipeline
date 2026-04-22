@@ -6,8 +6,8 @@ MONGODB_URI = getpass("Ingresa tu URI de MongoDB: ")
 
 # Parametros de busqueda en X
 X_QUERY = (
-    '((Chile OR chileno OR chilena OR gobierno OR congreso OR senado OR diputados OR presidencia OR presidente OR ministra OR ministerio OR "La Moneda" OR elecciones OR plebiscito OR constitución) (política OR politico OR politica OR gobierno OR legislativo OR ejecutivo)) '
-    'OR ((internacional OR mundo OR geopolítica OR geopolitica OR diplomacia OR ONU OR OTAN OR "Estados Unidos" OR Rusia OR Ucrania OR China OR Europa OR Israel OR Gaza) (política OR politico OR politica OR elecciones OR gobierno OR conflicto OR guerra OR sanciones)) '
+    '((Chile OR gobierno OR congreso OR presidente OR "La Moneda" OR elecciones) (política OR legislativo)) '
+    'OR ((internacional OR geopolítica OR ONU OR OTAN OR EEUU OR Rusia OR Ucrania OR Gaza) (política OR conflicto OR guerra)) '
     'lang:es has:links -is:retweet -is:reply'
 )
 X_MAX_RESULTS = 500
