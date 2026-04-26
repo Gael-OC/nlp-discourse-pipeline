@@ -10,7 +10,7 @@ X_QUERY = (
     'OR ((internacional OR geopolítica OR ONU OR OTAN OR EEUU OR Rusia OR Ucrania OR Gaza) (política OR conflicto OR guerra)) '
     'lang:es has:links -is:retweet -is:reply'
 )
-X_MAX_RESULTS = 500
+X_MAX_RESULTS = 100 
 
 # Parametros RSS
 COOPERATIVA_RSS_URL = "https://www.cooperativa.cl/noticias/site/tax/port/all/rss_3___1.xml"

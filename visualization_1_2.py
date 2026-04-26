@@ -16,7 +16,7 @@ def visualizar_comparativa_estrategias(df):
 
     # t-SNE
     axes[1].scatter(df['tsne_1'], df['tsne_2'], c=df['cluster'], cmap='viridis', alpha=0.7)
-    axes[1].set_title('t-SNE: Estructura Local (Perplexity=33)')
+    axes[1].set_title('t-SNE: Estructura Local (Perplexity=10)')
     axes[1].set_xlabel('Dim 1')
     axes[1].set_ylabel('Dim 2')
 

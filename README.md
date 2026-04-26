@@ -14,7 +14,7 @@ Pipeline de extracción, procesamiento y análisis no supervisado de discursos p
 - [Uso](#uso)
 - [Resultados y Visualizaciones](#resultados-y-visualizaciones)
 - [Notas Técnicas](#notas-técnicas)
-- [Licencia](#licencia)
+- [Autores](#autores)
 
 ---
 
@@ -207,5 +207,12 @@ Para cada cluster K-Means, se genera una nube de palabras con los términos más
 - **Robustez**: el pipeline maneja corpus de tamaño variable. Los parámetros de `perplexity` (t-SNE) y `n_neighbors` (UMAP) se ajustan dinámicamente si el dataset es pequeño, evitando errores de ejecución.
 - **Idioma**: el preprocesamiento está optimizado para español mediante stopwords de NLTK y normalización de caracteres especiales (tildes, eñes).
 - **Persistencia dual**: el uso de Parquet permite análisis offline y reproducibilidad local; MongoDB habilita consultas distribuidas y escalabilidad.
+
+---
+
+## Autores
+
+- **Gael Ortega** - *Estudiante de Ingeniería en Tecnologías de Información* - Universidad Católica del Norte.
+- **Matías Vidal** - *Estudiante de Ingeniería en Tecnologías de Información* - Universidad Católica del Norte.
 
 ---
